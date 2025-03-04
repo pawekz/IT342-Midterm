@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <title>Edit Contact</title>
+</head>
+<body class="container py-4">
+<nav class="mb-4">
+    <a href="/" class="btn btn-outline-primary">
+        <i class="bi bi-house me-2"></i>Home
+    </a>
+    <a href="/contacts/manage" class="btn btn-outline-secondary ms-2">
+        <i class="bi bi-arrow-left me-2"></i>Back to Manage
+    </a>
+</nav>
+
+<h1 class="mb-4">Edit Contact</h1>
+
+<!-- Edit Contact Form -->
+<div class="card p-4 shadow-sm mb-4" style="max-width: 500px;">
+    <form th:action="@{/contacts/update/{res}(res=${contactForm.resourceName})}" method="post" th:object="${contactForm}">
+        <input type="hidden" th:field="*{resourceName}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}" required>
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="phone" th:field="*{phone}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check2 me-2"></i>Update Contact
+        </button>
+    </form>
+</div>
+</body>
+</html>

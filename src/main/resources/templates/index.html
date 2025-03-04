@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+                        <html xmlns:th="http://www.thymeleaf.org">
+                        <head>
+                            <meta charset="UTF-8" />
+                            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+                            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+                            <title>Carabuena | Google Contacts Manager</title>
+                        </head>
+                        <body class="container py-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h1 th:text="'Hello, ' + ${fullName} + '!'">Hello, User!</h1>
+                                <form action="/logout" method="post" class="m-0">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="row mb-5">
+                                <div class="col">
+                                    <div class="d-flex gap-3">
+                                        <a href="/contacts/all" class="btn btn-primary">
+                                            <i class="bi bi-people me-2"></i>Display All Contacts
+                                        </a>
+                                        <a href="/contacts/add" class="btn btn-success">
+                                            <i class="bi bi-person-plus me-2"></i>Add Contact
+                                        </a>
+                                        <a href="/contacts/manage" class="btn btn-secondary">
+                                            <i class="bi bi-pencil-square me-2"></i>Manage Contacts
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body">
+                                            <h2>Welcome to Google Contacts Manager</h2>
+                                            <p class="lead">Use the buttons above to manage your Google contacts.</p>
+                                            <ul>
+                                                <li>View all your contacts in one place</li>
+                                                <li>Add new contacts to your Google account</li>
+                                                <li>Edit and update existing contact information</li>
+                                                <li>Remove contacts you no longer need</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </body>
+                        </html>
