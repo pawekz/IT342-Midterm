@@ -22,11 +22,15 @@
 
 <!-- Edit Contact Form -->
 <div class="card p-4 shadow-sm mb-4" style="max-width: 500px;">
-    <form th:action="@{/contacts/update/{res}(res=${contactForm.resourceName})}" method="post" th:object="${contactForm}">
-        <input type="hidden" th:field="*{resourceName}">
+    <form th:action="@{/contacts/update}" method="post" th:object="${contactForm}">
+        <input type="hidden" name="resourceName" th:value="${contactForm.resourceName}" />
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+            <label for="givenName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="givenName" th:field="*{givenName}" required>
+        </div>
+        <div class="mb-3">
+            <label for="familyName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="familyName" th:field="*{familyName}" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
@@ -36,9 +40,7 @@
             <label for="phone" class="form-label">Phone</label>
             <input type="tel" class="form-control" id="phone" th:field="*{phone}" required>
         </div>
-        <button type="submit" class="btn btn-primary">
-            <i class="bi bi-check2 me-2"></i>Update Contact
-        </button>
+        <button type="submit" class="btn btn-primary">Update Contact</button>
     </form>
 </div>
 </body>

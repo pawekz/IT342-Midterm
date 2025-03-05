@@ -72,9 +72,12 @@ public class ContactsController {
         try {
             Person newContact = new Person();
 
-            // Set name (to prevent duplication, we set displayName once)
+            // Set name properly
             List<Name> names = new ArrayList<>();
-            names.add(new Name().setGivenName(contactForm.getName()).setFamilyName(contactForm.getName()));
+            Name name = new Name()
+                    .setGivenName(contactForm.getGivenName())
+                    .setFamilyName(contactForm.getFamilyName());
+            names.add(name);
             newContact.setNames(names);
 
             // Set email
@@ -86,7 +89,7 @@ public class ContactsController {
             newContact.setPhoneNumbers(Collections.singletonList(phone));
 
             // Create the contact using Google API service
-            googleContactsService.createContact(client, newContact);
+            Person createdContact = googleContactsService.createContact(client, newContact);
             logger.info("Contact added successfully: {}", contactForm.getName());
             redirectAttributes.addFlashAttribute("successMessage", "Contact added successfully!");
         } catch (Exception e) {
@@ -97,9 +100,9 @@ public class ContactsController {
     }
 
     // Show form to edit an existing contact
-    @GetMapping("/edit/{resourceName}")
+    @GetMapping("/edit")
     public String showEditForm(@RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient client,
-                               @PathVariable String resourceName,
+                               @RequestParam String resourceName,
                                Model model) throws IOException {
         try {
             // Fetch the contact details from Google API
@@ -108,9 +111,10 @@ public class ContactsController {
                 ContactForm contactForm = new ContactForm();
                 contactForm.setResourceName(resourceName);
 
-                // Set existing contact details
+                // Set existing contact details with proper name handling
                 if (contactToEdit.getNames() != null && !contactToEdit.getNames().isEmpty()) {
-                    contactForm.setName(contactToEdit.getNames().get(0).getDisplayName());
+                    contactForm.setGivenName(contactToEdit.getNames().get(0).getGivenName());
+                    contactForm.setFamilyName(contactToEdit.getNames().get(0).getFamilyName());
                 }
 
                 if (contactToEdit.getEmailAddresses() != null && !contactToEdit.getEmailAddresses().isEmpty()) {
@@ -134,9 +138,9 @@ public class ContactsController {
     }
 
     // Update an existing contact
-    @PostMapping("/update/{resourceName}")
+    @PostMapping("/update")
     public String updateContact(@RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient client,
-                                @PathVariable String resourceName,
+                                @RequestParam String resourceName,
                                 @ModelAttribute ContactForm contactForm,
                                 RedirectAttributes redirectAttributes) throws IOException {
         logger.info("Updating contact with resourceName: {}", resourceName);
@@ -147,7 +151,10 @@ public class ContactsController {
 
             // Update the fields
             List<Name> names = new ArrayList<>();
-            names.add(new Name().setGivenName(contactForm.getName()).setFamilyName(contactForm.getName()));
+            Name name = new Name()
+                    .setGivenName(contactForm.getGivenName())
+                    .setFamilyName(contactForm.getFamilyName());
+            names.add(name);
             contactToUpdate.setNames(names);
 
             EmailAddress email = new EmailAddress().setValue(contactForm.getEmail());
@@ -168,9 +175,9 @@ public class ContactsController {
     }
 
     // Delete a contact
-    @PostMapping("/delete/{resourceName}")
+    @PostMapping("/delete")
     public String deleteContact(@RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient client,
-                                @PathVariable String resourceName,
+                                @RequestParam String resourceName,
                                 RedirectAttributes redirectAttributes) {
         try {
             // Delete the contact using Google API service

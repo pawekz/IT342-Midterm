@@ -21,8 +21,12 @@
 <div class="card p-4 shadow-sm mb-4" style="max-width: 500px;">
     <form th:action="@{/contacts/add}" method="post" th:object="${contactForm}">
         <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" th:field="*{name}" required>
+            <label for="givenName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="givenName" th:field="*{givenName}" required>
+        </div>
+        <div class="mb-3">
+            <label for="familyName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="familyName" th:field="*{familyName}" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
